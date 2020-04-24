@@ -31,7 +31,7 @@ class KeysHandler:
     def __init__(self):
         super().__init__()
         self.bind("<FocusOut>", self.focus_out)
-        self.sound = {k: sound.Load(BASE/"g800"/f"{r:02}.mp3")
+        self.sound = {k: sound.Load(BASE/"g800"/f"{r:02}.wav")
                       for r, k in zip(range(23, 73), KEYSIM)}
         self.fading = {}
         self.key_press = {}
