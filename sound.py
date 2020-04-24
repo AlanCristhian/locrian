@@ -4,7 +4,6 @@
 from ctypes import c_buffer, windll
 from sys    import getfilesystemencoding
 from uuid   import uuid4
-from itertools import cycle
 
 
 __all__ = ["Load"]
@@ -12,7 +11,6 @@ __all__ = ["Load"]
 
 _mciSendStringA = windll.winmm.mciSendStringA
 _mciGetErrorStringA = windll.winmm.mciGetErrorStringA
-_waveOutSetVolume = windll.winmm.waveOutSetVolume
 
 
 SYSTEM_ENCODING = getfilesystemencoding()
@@ -56,14 +54,12 @@ class Load:
         alias = f"key_{aid}"
         self._close = f"close {alias}"
         self._mode = f"status {alias} mode"
-        self._play = f"play {alias} from 95"
+        self._play = f"play {alias} from 0"
         self._set_volume = f"setaudio {alias} volume to %d"
         self._get_volume = f"status {alias} volume"
         self._stop = f"stop {alias}"
-        _mci_command(f'open "{path}" alias {alias}')
+        _mci_command(f'open "{path}" alias {alias} type mpegvideo')
         self.is_open = True
-        _mci_command(f"set {alias} time format milliseconds")
-        _mci_command(f"cue {alias} output")
 
     def __enter__(self):
         return self
